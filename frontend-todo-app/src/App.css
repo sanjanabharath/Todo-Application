@@ -1,0 +1,39 @@
+*{
+    font-family: 'Poppins', sans-serif;
+}
+
+.card{
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-right-color: rgba(255, 255, 255, 0.1);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+    width: 500px;
+    height: 50px;
+}
+
+.content{
+    margin-top: 15px;
+}
+
+.todo-btn{
+    border: 0px;
+    border-radius: 5px;
+    padding: 7px;
+}
+
+.todo-btn:hover{
+    /* background-color: ; */
+    cursor: pointer;
+}
+
+.update{
+
+}
+
+.delete{
+
+}
