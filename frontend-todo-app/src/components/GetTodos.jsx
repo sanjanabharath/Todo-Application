@@ -8,7 +8,11 @@ const GetTodos = () => {
   useEffect(() => {
     setInterval(() => {
       fetch("http://localhost:3000/todos", {
-        method: "GET"
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": "Bearer "+localStorage.getItem('token')
+        }
       }).then((response) => {
         response.json().then((data) =>{
           setTodos(data)

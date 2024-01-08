@@ -3,7 +3,7 @@
 }
 
 .card{
-    margin: 20px;
+    margin: 20px auto;
     padding: 10px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-right-color: rgba(255, 255, 255, 0.1);
@@ -30,10 +30,3 @@
     cursor: pointer;
 }
 
-.update{
-
-}
-
-.delete{
-
-}

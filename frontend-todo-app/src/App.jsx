@@ -4,6 +4,7 @@ import SIgnUp from './components/SIgnUp'
 import SignIn from './components/SignIn'
 import Home from './components/Home'
 import Appbar from "./components/Appbar";
+import TodoPage from "./components/TodoPage"
 import './App.css'
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/signup' element={<SIgnUp/>}/>
           <Route path='/signin' element={<SignIn/>}/>
-          <Route path='/todos' element={<GetTodos/>}/>
+          <Route path='/todos' element={<TodoPage/>}/>
         </Routes>
       </BrowserRouter>
     </div>

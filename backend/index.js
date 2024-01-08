@@ -4,7 +4,7 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const app = express()
-const secret = "ilhok tariv"
+const SECRET = "ilhok tariv"
 
 app.use(express.json())
 app.use(cors())
@@ -12,20 +12,24 @@ dotenv.config({ path: './config/config.env'})
 const connect = mongoose.connect(process.env.MONGO_DB)
 
 function generateJwt(username){
-    const token = jwt.sign(username, secret)
+    const token = jwt.sign(username, SECRET)
     return token
 }
 
 function authenticateUser(req, res, next){
-    const token = req.header.authentication
-    const user = jwt.verify(token, secret)
-
-    if(user){
-        req.user = user
-        next()
-    } else{
-        res.status(403).send("User does not exist")
-    }
+    const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
+    jwt.verify(token, SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      req.user = user;
+      next();
+    });
+  } else {
+    res.sendStatus(401);
+  }
 }
 
 if(connect){
@@ -48,7 +52,7 @@ const userSchema = new mongoose.Schema({
 const Todos = mongoose.model('Todos', todosSchema)
 const User = mongoose.model('User', userSchema)
 
-app.get('/signup', async (req, res) => {
+app.post('/signup', async (req, res) => {
     const { username, password } = req.body
 
     if(!username || !password){
@@ -64,12 +68,12 @@ app.get('/signup', async (req, res) => {
     }
 })
 
-app.get('/signin', async (req, res) => {
+app.post('/signin', async (req, res) => {
     const { username, password } = req.body
     const user = await User.findOne({username: username, password: password})
 
     if(user){
-        res.status(201).json({message: "Login is done successfully"})
+        res.status(201).json({message: "Login is done successfully", token: generateJwt(username)})
     } else{
         res.status(403).json({message: "Create a profile to login"})
     }
@@ -78,6 +82,10 @@ app.get('/signin', async (req, res) => {
 app.get('/todos', authenticateUser, async (req, res) => {
     const todos = await Todos.find({})
     res.json(todos)
+})
+
+app.get('/profile', authenticateUser, (req, res) => {
+    res.json({username: req.user})
 })
 
 app.post('/todos', authenticateUser, async (req, res) => {
