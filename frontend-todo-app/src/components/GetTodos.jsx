@@ -23,7 +23,7 @@ const GetTodos = () => {
   return (
     <div>
         {todos.map((todo) => {
-        return <Todo title={todo.title} description={todo.description} />
+        return <Todo title={todo.title} description={todo.description} id={todo._id}/>
       })}
     </div>
   )
